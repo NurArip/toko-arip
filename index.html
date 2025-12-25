@@ -2,64 +2,76 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Toko Online Gratis</title>
+  <title>Toko Arip</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      margin: 0;
-    }
-    header {
-      background: #1565c0;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .container {
-      padding: 15px;
-    }
-    .produk {
-      background: white;
-      margin-bottom: 20px;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    .produk img {
-      width: 100%;
-      border-radius: 8px;
-    }
-    .btn {
-      display: block;
-      background: #25d366;
-      color: white;
-      text-align: center;
-      padding: 12px;
-      margin-top: 10px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>Toko Online Saya</h1>
-  <p>Belanja mudah & cepat via WhatsApp</p>
+<!-- LANDING / HERO -->
+<header class="hero">
+  <h1>TOKO ARIP</h1>
+  <p>Produk Terbaik • Order Mudah via WhatsApp</p>
+
+  <input type="text" id="search" placeholder="Cari produk...">
+
+  <div class="filter">
+    <button onclick="filterProduk('all')">Semua</button>
+    <button onclick="filterProduk('makanan')">Makanan</button>
+    <button onclick="filterProduk('minuman')">Minuman</button>
+    <button onclick="filterProduk('promo')">Promo</button>
+    <button onclick="sortHarga()">Harga ↑</button>
+    <button onclick="toggleDark()">🌙</button>
+  </div>
 </header>
 
-<div class="container">
+<!-- SLIDER -->
+<div class="slider">
+  <img src="images/banner1.jpg">
+  <img src="images/banner2.jpg">
+</div>
 
-  <div class="produk">
-    <img src="https://via.placeholder.com/400" alt="Produk 1">
-    <h2>Nama Produk</h2>
-    <p>Deskripsi produk bisa kamu ubah sendiri.</p>
-    <strong>Rp 50.000</strong>
-    <a class="btn" href="https://wa.me/62XXXXXXXXXX">Beli Sekarang</a>
+<!-- PRODUK -->
+<div class="produk-container" id="produkList">
+
+  <div class="produk makanan best" data-harga="25000">
+    <span class="label">Best Seller</span>
+    <img src="images/produk1.jpg">
+    <h3>Nasi Porang</h3>
+    <p>Rendah kalori & sehat</p>
+    <span>Rp 25.000</span>
+    <button onclick="addCart('Nasi Porang',25000)">Tambah</button>
+  </div>
+
+  <div class="produk minuman promo" data-harga="15000">
+    <span class="label promo">Promo</span>
+    <img src="images/produk2.jpg">
+    <h3>Teh Herbal</h3>
+    <p>Segar & alami</p>
+    <span>Rp 15.000</span>
+    <button onclick="addCart('Teh Herbal',15000)">Tambah</button>
+  </div>
+
+  <div class="produk makanan" data-harga="30000">
+    <img src="images/produk3.jpg">
+    <h3>Snack Diet</h3>
+    <p>Cemilan sehat</p>
+    <span>Rp 30.000</span>
+    <button onclick="addCart('Snack Diet',30000)">Tambah</button>
   </div>
 
 </div>
 
+<!-- KERANJANG -->
+<div class="cart">
+  <h3>🛒 Keranjang</h3>
+  <ul id="cartList"></ul>
+  <button onclick="checkout()">Checkout WhatsApp</button>
+</div>
+
+<!-- STICKY WA -->
+<a class="wa-float" href="https://wa.me/62NOMORKAMU" target="_blank">WA</a>
+
+<script src="script.js"></script>
 </body>
 </html>
