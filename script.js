@@ -1,42 +1,60 @@
+// ==========================
+// KERANJANG BELANJA
+// ==========================
 let cart = [];
 
-document.getElementById("search").addEventListener("keyup", function () {
-  let q = this.value.toLowerCase();
-  document.querySelectorAll(".produk").forEach(p => {
-    p.style.display = p.innerText.toLowerCase().includes(q) ? "block" : "none";
-  });
-});
-
-function filterProduk(k) {
-  document.querySelectorAll(".produk").forEach(p => {
-    p.style.display = (k === "all" || p.classList.contains(k)) ? "block" : "none";
-  });
-}
-
-function sortHarga() {
-  let list = document.getElementById("produkList");
-  let items = [...list.children].sort((a,b)=>a.dataset.harga-b.dataset.harga);
-  items.forEach(i=>list.appendChild(i));
-}
-
-function toggleDark() {
-  document.body.classList.toggle("dark");
-}
-
-function addCart(nama,harga) {
-  cart.push({nama,harga});
+// Tambah produk ke keranjang
+function addCart(nama, harga) {
+  harga = Number(harga); // pastikan angka
+  cart.push({ nama, harga });
   renderCart();
 }
 
+// Tampilkan isi keranjang
 function renderCart() {
-  let ul = document.getElementById("cartList");
-  ul.innerHTML = "";
-  cart.forEach(i=>{
-    ul.innerHTML += `<li>${i.nama} - Rp ${i.harga}</li>`;
+  const list = document.getElementById("cartList");
+  list.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${item.nama} - Rp ${item.harga.toLocaleString("id-ID")}`;
+    list.appendChild(li);
   });
+
+  updateTotal();
 }
 
+// Hitung & tampilkan total harga
+function updateTotal() {
+  let total = 0;
+  cart.forEach(item => {
+    total += item.harga;
+  });
+
+  const totalEl = document.getElementById("totalHarga");
+  if (totalEl) {
+    totalEl.textContent = total.toLocaleString("id-ID");
+  }
+}
+
+// Checkout ke WhatsApp
 function checkout() {
-  let pesan = cart.map(i=>`${i.nama} Rp${i.harga}`).join("%0A");
-  window.open(`https://wa.me/62NOMORKAMU?text=Order:%0A${pesan}`);
+  if (cart.length === 0) {
+    alert("Keranjang masih kosong");
+    return;
+  }
+
+  let pesan = "Halo, saya mau pesan:%0A%0A";
+
+  cart.forEach(item => {
+    pesan += `- ${item.nama} : Rp ${item.harga.toLocaleString("id-ID")}%0A`;
+  });
+
+  let total = cart.reduce((sum, item) => sum + item.harga, 0);
+  pesan += `%0A*Total: Rp ${total.toLocaleString("id-ID")}*`;
+
+  // GANTI nomor WA di bawah ini
+  const noWA = "62XXXXXXXXXX";
+
+  window.open(`https://wa.me/${noWA}?text=${pesan}`, "_blank");
 }
